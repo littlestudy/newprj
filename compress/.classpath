@@ -50,7 +50,7 @@
 	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-client-1.2.1.jar"/>
 	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-minicluster-1.2.1.jar"/>
 	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-ant-1.2.1.jar"/>
-	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-core-1.2.1.jar"/>
+	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-core-1.2.1.jar" sourcepath="/home/ym/develop/hadoop"/>
 	<classpathentry kind="lib" path="/home/ym/develop/hadoop/hadoop-tools-1.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/json-simple.jar"/>
 	<classpathentry kind="output" path="bin"/>

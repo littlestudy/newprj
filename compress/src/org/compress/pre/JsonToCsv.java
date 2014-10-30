@@ -14,28 +14,31 @@ import org.json.simple.parser.ParseException;
 
 public class JsonToCsv {
 	private static String[] targetFileds = new String[] { "appKey",
-			"appVersion", "dataType"
+			"appVersion", "dataType" // 0
 
-			, "city", "ip", "isp", "logCity", "logProvince"
+			, "city", "ip", "isp", "logCity", "logProvince" // 2
 
 			, "deviceCarrier", "deviceHashMac", "deviceIMEI", "deviceMacAddr",
 			"deviceModel", "deviceNetwork", "deviceOs", "deviceOsVersion",
-			"deviceResolution", "deviceUdid", "appChannel"
+			"deviceResolution", "deviceUdid", "appChannel" // 7
 
-			, "userName", "occurTime", "persistedTime"
+			, "userName", "occurTime", "persistedTime"  // 18
 
 			// , "sessionUuid"
 
-			, "eventId", "costTime", "logSource"
-
-			, "sessionStep"
+			, "eventId", "costTime", "logSource"  // 21
+ 
+			, "sessionStep"  // 24
 	// , "attributes" //:{"toVer":"1.5.1","fromVer":"1.4.0"}}
 	};
 	private static final JSONParser parser = new JSONParser();
 	private static final int buffer_size = 1000;
 	
 	public static void main(String[] args) {
-
+		String input = "/home/ym/ytmp/data/o100R";
+		String output= "/home/ym/ytmp/data/h100R";
+		
+		jsonToCsv(input, output);
 	}
 
 	public static void jsonToCsv(String input, String output) {
