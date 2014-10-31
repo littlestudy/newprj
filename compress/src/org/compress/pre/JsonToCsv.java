@@ -22,7 +22,8 @@ public class JsonToCsv {
 			"deviceModel", "deviceNetwork", "deviceOs", "deviceOsVersion",
 			"deviceResolution", "deviceUdid", "appChannel" // 7
 
-			, "userName", "occurTime", "persistedTime"  // 18
+			, "userName"  //18
+			, "occurTime", "persistedTime"  // 19
 
 			// , "sessionUuid"
 

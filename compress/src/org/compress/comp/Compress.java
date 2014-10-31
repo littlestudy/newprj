@@ -114,7 +114,7 @@ public class Compress {
 		String input = "file:///home/ym/ytmp/data/1mRsample-H";
 		String outputbase = "file:///home/ym/ytmp/data/output/1mRsample-H-r";
 		String output = null;
-		int[] positions = new int[] { 0, 2, 7, 18, 21, 24 };
+		int[] positions = new int[] { 0, 2, 7, 18, 19, 21, 24 };
 
 		Configuration conf = new Configuration();
 		Job job = null;
