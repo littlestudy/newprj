@@ -31,9 +31,18 @@ public class UnCompress {
 		return result;
 	}
 
-	private static String getField(String records, int StartPos) {
-		int endPos = records.indexOf(")", StartPos);
-		return records.substring(StartPos, endPos + 1);
+	private static String getField(String records, int startPos) {
+		int dep = 1;
+		int searchPos = startPos + 1;
+		while (dep > 0){
+			if (records.charAt(searchPos) == '(')
+				dep++;
+			else if (records.charAt(searchPos) == ')')
+				dep--;
+			searchPos++;
+		}
+		
+		return records.substring(startPos, searchPos);
 	}
 
 	private static String buildObject(List<String> fields) {

@@ -84,17 +84,44 @@ public class Compress {
 	}
 
 	public static void main(String[] args) throws Exception {
+		//test();
+		dataHandler();
+	}
+
+	public static void test() throws Exception {
 		String input = "file:///home/ym/ytmp/data/test";
-		String outputbase = "file:///home/ym/ytmp/data/test-C";
+		String outputbase = "file:///home/ym/ytmp/data/output/test";
+
 		String output = null;
-		int[] positions = new int[] { 4, 2, 1, 0 };
+		int[] positions = new int[] { 0,1, 2, 4 };
 
 		Configuration conf = new Configuration();
 		Job job = null;
 
 		output = outputbase;
 		for (int i = 0; i < positions.length; i++) {
-			conf.set(POSITION, String.valueOf(positions[i]));
+			conf.set(POSITION, String.valueOf(positions[positions.length - i - 1]));
+			job = new Job(conf);
+			initJob(job);
+			setJobPath(job, input, output);
+			job.waitForCompletion(true);
+			input = output;
+			output = outputbase + i;
+		}
+	}
+	
+	public static void dataHandler() throws Exception{
+		String input = "file:///home/ym/ytmp/data/1mRsample-H";
+		String outputbase = "file:///home/ym/ytmp/data/output/1mRsample-H-r";
+		String output = null;
+		int[] positions = new int[] { 0, 2, 7, 18, 21, 24 };
+
+		Configuration conf = new Configuration();
+		Job job = null;
+
+		output = outputbase;
+		for (int i = 0; i < positions.length; i++) {
+			conf.set(POSITION, String.valueOf(positions[positions.length - i - 1]));
 			job = new Job(conf);
 			initJob(job);
 			setJobPath(job, input, output);

@@ -35,8 +35,8 @@ public class JsonToCsv {
 	private static final int buffer_size = 1000;
 	
 	public static void main(String[] args) {
-		String input = "/home/ym/ytmp/data/o100R";
-		String output= "/home/ym/ytmp/data/h100R";
+		String input = "/home/ym/ytmp/data/1mRsample";
+		String output= "/home/ym/ytmp/data/1mRsample-H";
 		
 		jsonToCsv(input, output);
 	}
