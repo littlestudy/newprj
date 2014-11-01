@@ -13,23 +13,23 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonToCsv {
-	private static String[] targetFileds = new String[] { "appKey",
-			"appVersion", "dataType" // 0
+	private static String[] targetFileds = new String[] {
+			"appKey", "appVersion", "dataType" // 0
 
-			, "city", "ip", "isp", "logCity", "logProvince" // 2
+			, "city", "ip", "isp", "logCity", "logProvince" // 3
 
 			, "deviceCarrier", "deviceHashMac", "deviceIMEI", "deviceMacAddr",
 			"deviceModel", "deviceNetwork", "deviceOs", "deviceOsVersion",
-			"deviceResolution", "deviceUdid", "appChannel" // 7
+			"deviceResolution", "deviceUdid", "appChannel" // 8
 
-			, "userName"  //18
-			, "occurTime", "persistedTime"  // 19
+			, "userName"  //19
+			, "occurTime", "persistedTime"  // 20
 
 			// , "sessionUuid"
 
-			, "eventId", "costTime", "logSource"  // 21
+			, "eventId", "costTime", "logSource"  // 22
  
-			, "sessionStep"  // 24
+			, "sessionStep"  // 25
 	// , "attributes" //:{"toVer":"1.5.1","fromVer":"1.4.0"}}
 	};
 	private static final JSONParser parser = new JSONParser();
@@ -85,9 +85,15 @@ public class JsonToCsv {
 			JSONObject jsonObj = (JSONObject) parser.parse(jsonString);
 			for (int i = 0; i < targetFileds.length; i++) {
 				Object field = jsonObj.get(targetFileds[i]);
-				if (field == null || "".equals(field))
+				if (field == null || "".equals(field)){
 					field = "##\t";
-				sb.append("," + field.toString());
+					sb.append("," + field.toString());	
+				}else {
+					String fieldStr = field.toString();
+					if (fieldStr.contains(","))
+						fieldStr = replaceStr(fieldStr);
+					sb.append("," + fieldStr);
+				}
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -95,4 +101,13 @@ public class JsonToCsv {
 
 		return sb.toString().substring(1);
 	}
+	
+	private static String replaceStr(String line){
+		String[] strs = line.split(",");
+		StringBuilder sb = new StringBuilder();
+		for (String str : strs)
+			sb.append("|" + str.trim());
+		return sb.substring(1);
+	}
+	
 }
