@@ -1,4 +1,4 @@
-package org.compress.pre.testdata;
+package org.v1.pre.testdata;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;

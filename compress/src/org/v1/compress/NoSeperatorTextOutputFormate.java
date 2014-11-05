@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.compress.comp;
+package org.v1.compress;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

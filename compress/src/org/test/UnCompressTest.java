@@ -2,7 +2,7 @@ package org.test;
 
 import java.util.List;
 
-import org.compress.umcomp.UnCompress;
+import org.v1.uncompress.UnCompress;
 
 public class UnCompressTest {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package org.compress.comp;
+package org.v1.compress;
 
 import java.io.IOException;
 
@@ -13,11 +13,11 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 //import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class Compress {
-	private static final Logger log = LoggerFactory.getLogger(Compress.class);
+	//private static final Logger log = LoggerFactory.getLogger(Compress.class);
 	private static final String POSITION = "position";
 
 	public static class MappClass extends

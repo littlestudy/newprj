@@ -1,4 +1,4 @@
-package org.compress.umcomp;
+package org.v1.uncompress;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.datascience.statistics.fieldcount;
+package org.v1.datascience.statistics.fieldcount;
 
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;

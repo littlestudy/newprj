@@ -1,4 +1,4 @@
-package org.compress.pre;
+package org.v1.pre;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,20 +15,27 @@ import org.json.simple.parser.ParseException;
 public class JsonToCsv {
 	private static String[] targetFileds = new String[] {
 			"appKey", "appVersion", "dataType" // 0
+			//  1		2				3
 
 			, "city", "ip", "isp", "logCity", "logProvince" // 3
-
+			//  4		5	  6      7          8
+			
 			, "deviceCarrier", "deviceHashMac", "deviceIMEI", "deviceMacAddr",
+			//   9				10					11			12
 			"deviceModel", "deviceNetwork", "deviceOs", "deviceOsVersion",
+			//   13				14				15			16
 			"deviceResolution", "deviceUdid", "appChannel" // 8
+			//   17					18				19
 
 			, "userName"  //19
+			//  20
 			, "occurTime", "persistedTime"  // 20
-
+			//   21				22
 			// , "sessionUuid"
 
 			, "eventId", "costTime", "logSource"  // 22
- 
+			//  23			24			25
+			
 			, "sessionStep"  // 25
 	// , "attributes" //:{"toVer":"1.5.1","fromVer":"1.4.0"}}
 	};

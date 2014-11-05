@@ -1,4 +1,4 @@
-package org.datascience.statistics.fieldsort;
+package org.v1.datascience.statistics.fieldsizesort;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -15,8 +15,8 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class FieldSort {
-	public static class MappClass extends Mapper<LongWritable, Text, FieldNumKey, Text>{
-		private FieldNumKey fieldNumKey = new FieldNumKey();
+	public static class MappClass extends Mapper<LongWritable, Text, FieldSizeKey, Text>{
+		private FieldSizeKey fieldSizeKey = new FieldSizeKey();
 		private Text outputValue = new Text();
 		
 		@Override
@@ -27,27 +27,30 @@ public class FieldSort {
 			String field = fields[0];
 			String fvalue = fields[1];
 			int num = Integer.parseInt(fields[2]);
-			fieldNumKey.set(field, num);
-			outputValue.set(num + "\t" + fvalue);
-			context.write(fieldNumKey, outputValue);
+			
+			long size = fvalue.getBytes().length * num;			
+			fieldSizeKey.set(field, size);
+			outputValue.set(fvalue + "\t" +num);
+			
+			context.write(fieldSizeKey, outputValue);
 		}
 	}
 	
-	public static class ReduceClass extends Reducer<FieldNumKey, Text, Text, Text>{
+	public static class ReduceClass extends Reducer<FieldSizeKey, Text, Text, Text>{
 		private Text outputKey = new Text();
 		private Text outputValue = new Text();
 		
 		private Text seperator = new Text("---------------------");
 		
 		@Override
-		protected void reduce(FieldNumKey key, Iterable<Text> values, Context context)
+		protected void reduce(FieldSizeKey key, Iterable<Text> values, Context context)
 				throws IOException, InterruptedException {
 			 Iterator<Text> iter = values.iterator();
 			 int i = 0;
 			 Text value = null;
 			 while (iter.hasNext() && i < 10){
 				 value = iter.next();
-				 outputKey.set(key.getField());
+				 outputKey.set(key.getField() + "\t" + key.getSize());
 				 outputValue.set(value.toString());
 				 context.write(outputKey, outputValue);
 				 i++;
@@ -64,7 +67,7 @@ public class FieldSort {
 	
 	public static void main(String[] args) throws Exception{
 		String input = "/home/ym/ytmp/data/output/1mRsample/mrs";		
-		String output = "/home/ym/ytmp/data/output/1mRsample/mrssss";
+		String output = "/home/ym/ytmp/data/output/1mRsample/mrssss-size";
 		
 		runJob(input, output);
 	}
@@ -73,14 +76,14 @@ public class FieldSort {
 			InterruptedException, ClassNotFoundException {
 		Configuration conf = new Configuration();
 		Job job = new Job(conf);
-		job.setJarByClass(FieldNumKey.class);
+		job.setJarByClass(FieldSizeKey.class);
 
 		job.setMapperClass(MappClass.class);
 		job.setReducerClass(ReduceClass.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
 
-		job.setMapOutputKeyClass(FieldNumKey.class);
+		job.setMapOutputKeyClass(FieldSizeKey.class);
 		job.setMapOutputValueClass(Text.class);
 
 		job.setOutputKeyClass(Text.class);

@@ -1,4 +1,4 @@
-package org.datascience.statistics.fieldsort;
+package org.v1.datascience.statistics.fieldsort;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;

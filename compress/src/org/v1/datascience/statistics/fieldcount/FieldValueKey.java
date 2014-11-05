@@ -1,4 +1,4 @@
-package org.datascience.statistics.fieldsort;
+package org.v1.datascience.statistics.fieldcount;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -6,14 +6,14 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.WritableComparable;
 
-public class FieldNumKey implements WritableComparable<FieldNumKey> {
+public class FieldValueKey implements WritableComparable<FieldValueKey>{
 
 	private String field;
-	private int num;
-
-	public FieldNumKey() {
+	private String value;
+	
+	public FieldValueKey(){		
 	}
-
+	
 	public String getField() {
 		return field;
 	}
@@ -22,42 +22,42 @@ public class FieldNumKey implements WritableComparable<FieldNumKey> {
 		this.field = field;
 	}
 
-	public int getNum() {
-		return num;
+	public String getValue() {
+		return value;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@Override
 	public void write(DataOutput out) throws IOException {
 		out.writeUTF(field);
-		out.writeInt(num);
+		out.writeUTF(value);		
 	}
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
 		this.field = in.readUTF();
-		this.num = in.readInt();
+		this.value = in.readUTF();		
 	}
 
 	@Override
-	public int compareTo(FieldNumKey o) {
+	public int compareTo(FieldValueKey o) {
 		int cmp = this.field.compareTo(o.field);
 		if (cmp != 0)
 			return cmp;
 		
-		return this.num - o.num;
+		return this.value.compareTo(o.value);
 	}
 
-	public void set(String field, int num){
+	public void set(String field, String value){
 		this.field = field;
-		this.num = num;
+		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return field + "\t" + num ;
+		return field + "\t" + value.trim();
 	}	
 }

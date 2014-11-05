@@ -1,4 +1,4 @@
-package org.compress.pre;
+package org.v1.pre;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
