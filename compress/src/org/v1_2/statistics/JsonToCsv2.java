@@ -1,4 +1,4 @@
-package org.v1_2.compress;
+package org.v1_2.statistics;
 
 import java.util.List;
 
@@ -6,17 +6,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class JsonToCsv {
-	private static final String group_separator = "";
+public class JsonToCsv2 {	
 	
 	public static String jsonStringToCsv(JSONParser parser, String jsonString,
 			List<String[]> targetFileds) {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder tsb = new StringBuilder();
 		try {
 			JSONObject jsonObj = (JSONObject) parser.parse(jsonString);
 			for (int i = 0; i < targetFileds.size(); i++) {
-				String[] fieldGroup = targetFileds.get(i);
-				StringBuilder tsb = new StringBuilder();
+				String[] fieldGroup = targetFileds.get(i);				
 				for (int j = 0; j < fieldGroup.length; j++) {
 					Object field = jsonObj.get(fieldGroup[j]);
 					if (field == null || "".equals(field)) {
@@ -29,13 +27,12 @@ public class JsonToCsv {
 						tsb.append("," + fieldStr);
 					}
 				}
-				sb.append(tsb.toString().substring(1) + group_separator);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
-		return sb.toString().substring(1, sb.toString().length() - 2);
+		return tsb.toString().substring(1);
 	}
 
 	private static String replaceStr(String line) {
