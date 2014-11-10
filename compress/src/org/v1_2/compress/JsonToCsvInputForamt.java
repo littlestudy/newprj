@@ -1,6 +1,7 @@
 package org.v1_2.compress;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.io.LongWritable;
@@ -79,9 +80,8 @@ public class JsonToCsvInputForamt extends FileInputFormat<LongWritable, Text> {
 			reader.close();
 		}
 
-		public static List<String[]> getTargetFileds2() {
-			/*
-			System.out.println("--MyInputFormat");
+		public static List<String[]> getTargetFileds() {			
+			System.out.println("-------------->>  getTargetFileds()");
 			List<String[]> list = new ArrayList<String[]>();
 			String[] group1 = { "appKey", "appVersion", "dataType" };
 			String[] group2 = { "city", "ip", "isp", "logCity", "logProvince" };
@@ -104,10 +104,13 @@ public class JsonToCsvInputForamt extends FileInputFormat<LongWritable, Text> {
 			JsonToCsvInputForamt.JsonToCsvRecordReader.targetFileds = list;
 
 			return list;
-			*/
-			return null;
+			
 		}
 
+	}
+	
+	public static void getTargetFileds(){
+		JsonToCsvRecordReader.getTargetFileds();
 	}
 
 }

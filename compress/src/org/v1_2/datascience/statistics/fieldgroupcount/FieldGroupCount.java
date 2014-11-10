@@ -1,4 +1,4 @@
-package org.v1_2.datascience.statistics.fieldcount;
+package org.v1_2.datascience.statistics.fieldgroupcount;
 
 import java.io.IOException;
 
@@ -13,47 +13,43 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.v1_2.compress.JsonToCsvInputForamt;
 
-public class FieldCount {
+public class FieldGroupCount {
 
 	public static class MappClass extends
-			Mapper<LongWritable, Text, FieldValueKey, IntWritable> {
-		private FieldValueKey fieldValueKey = new FieldValueKey();
+			Mapper<LongWritable, Text, FieldGroupValueKey, IntWritable> {
+		private FieldGroupValueKey fieldValueKey = new FieldGroupValueKey();
 		private IntWritable account = new IntWritable(1);
 
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
-			String[] fields = line.split(",", -1);
-			//if (fields.length == 27){
-			//	for (String str : fields)
-			//	System.out.println(str);
-			//}
-			for (int i = 0; i < fields.length; i++) {
+			String[] fieldGroup = line.split("##", -1);
+
+			for (int i = 0; i < fieldGroup.length; i++) {
 				String field = String.format("%1$02d", i + 1);
-				fieldValueKey.set(field, fields[i]);
+				fieldValueKey.set(field, fieldGroup[i]);
 				context.write(fieldValueKey, account);
 			}
 		}
 	}
 
 	public static class ReduceClass extends
-			Reducer<FieldValueKey, IntWritable, Text, Text> {
+			Reducer<FieldGroupValueKey, IntWritable, Text, Text> {
 		private Text outputKey = new Text();
 		private Text outputValue = new Text();
 
-		private long total = 0;
 		//private Text seperator = new Text("---------------------");
 		
 		@Override
-		protected void reduce(FieldValueKey key, Iterable<IntWritable> values,
+		protected void reduce(FieldGroupValueKey key, Iterable<IntWritable> values,
 				Context context) throws IOException, InterruptedException {
 			long account = 0;
 			for (IntWritable i : values) {
 				account += i.get();
 			}
-			total += (account * key.getValue().getBytes().length);
 			outputKey.set(key.toString());
 			outputValue.set(String.valueOf(account));
 			context.write(outputKey, outputValue);
@@ -62,14 +58,13 @@ public class FieldCount {
 		@Override
 		protected void cleanup(Context context)
 				throws IOException, InterruptedException {
-			System.out.println("total -->>> " + total + "\n");
+			//context.write(seperator, seperator);			
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		//String input = "/home/ym/ytmp/data/statistics/1mRsample-H";
-		String input = "/home/ym/ytmp/data/statistics/test";		
-		String output = "/home/ym/ytmp/data/statistics/output/FieldCount22";
+		String input = "/home/ym/ytmp/data/statistics/1mRsample";		
+		String output = "/home/ym/ytmp/data/statistics/output/FieldGroupCount";
 		
 		runJob(input, output);
 	}
@@ -78,14 +73,15 @@ public class FieldCount {
 			InterruptedException, ClassNotFoundException {
 		Configuration conf = new Configuration();
 		Job job = new Job(conf);
-		job.setJarByClass(FieldCount.class);
+		job.setJarByClass(FieldGroupCount.class);
 
 		job.setMapperClass(MappClass.class);
 		job.setReducerClass(ReduceClass.class);
 
-		job.setInputFormatClass(TextInputFormat.class);
+		JsonToCsvInputForamt.getTargetFileds();
+		job.setInputFormatClass(JsonToCsvInputForamt.class);
 
-		job.setMapOutputKeyClass(FieldValueKey.class);
+		job.setMapOutputKeyClass(FieldGroupValueKey.class);
 		job.setMapOutputValueClass(IntWritable.class);
 
 		job.setOutputKeyClass(Text.class);

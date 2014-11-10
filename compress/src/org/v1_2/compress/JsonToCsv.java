@@ -7,7 +7,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonToCsv {
-	private static final String group_separator = "";
+	private static final String group_separator = "##";
 	
 	public static String jsonStringToCsv(JSONParser parser, String jsonString,
 			List<String[]> targetFileds) {

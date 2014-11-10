@@ -35,7 +35,7 @@ public class MyInputFormat extends JsonToCsvInputForamt{
 	};
 	*/
 	
-	public static List<String[]> getTargetFileds() {
+	public static List<String[]> getTargetFileds2() {
 		System.out.println("--MyInputFormat");
 		List<String[]> list = new ArrayList<String[]>();
 		String[] group1 = {"appKey", "appVersion", "dataType"};
