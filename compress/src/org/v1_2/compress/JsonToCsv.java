@@ -35,7 +35,7 @@ public class JsonToCsv {
 			e.printStackTrace();
 		}
 
-		return sb.toString().substring(1, sb.toString().length() - 2);
+		return sb.toString().substring(0, sb.toString().length() - 2);
 	}
 
 	private static String replaceStr(String line) {

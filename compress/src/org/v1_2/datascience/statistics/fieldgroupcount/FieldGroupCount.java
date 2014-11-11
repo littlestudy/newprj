@@ -21,7 +21,8 @@ public class FieldGroupCount {
 			Mapper<LongWritable, Text, FieldGroupValueKey, IntWritable> {
 		private FieldGroupValueKey fieldValueKey = new FieldGroupValueKey();
 		private IntWritable account = new IntWritable(1);
-
+		private long size = 0;
+		
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
@@ -31,8 +32,16 @@ public class FieldGroupCount {
 			for (int i = 0; i < fieldGroup.length; i++) {
 				String field = String.format("%1$02d", i + 1);
 				fieldValueKey.set(field, fieldGroup[i]);
+				size += fieldGroup[i].getBytes().length;
 				context.write(fieldValueKey, account);
 			}
+		}
+		
+		@Override
+		protected void cleanup(
+				Mapper<LongWritable, Text, FieldGroupValueKey, IntWritable>.Context context)
+				throws IOException, InterruptedException {
+			System.out.println("-- size -- > " + size);
 		}
 	}
 

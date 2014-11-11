@@ -18,7 +18,7 @@ public class SizeOfEveryGroup {
 	public static class MappClass extends Mapper<LongWritable, Text, Text, LongWritable>{
 		private Text mapOutputKey = new Text();
 		private LongWritable mapOutputValue = new LongWritable();
-		
+		private long totalnum = 0;
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
@@ -27,10 +27,18 @@ public class SizeOfEveryGroup {
 			String groupFiled = fields[0];
 			String groupFieldValue = fields[1];
 			int num = Integer.parseInt(fields[2]);
+			totalnum += num;
 			long size = groupFieldValue.getBytes().length * num;
 			mapOutputKey.set(groupFiled);
 			mapOutputValue.set(size);
 			context.write(mapOutputKey, mapOutputValue);
+		}
+		
+		@Override
+		protected void cleanup(
+				Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+				throws IOException, InterruptedException {
+			System.out.println("totalnum -- > " + totalnum);
 		}
 	}
 	
@@ -46,7 +54,7 @@ public class SizeOfEveryGroup {
 				count += value.get();
 			
 			totalCount += count;
-			
+			outputValue.set(String.valueOf(count));
 			context.write(key, outputValue);
 		}
 		

@@ -32,7 +32,7 @@ public class FieldGroupSort {
 
 			long size = fvalue.getBytes().length * num;
 			fieldGroupSizeKey.set(field, size);
-			outputValue.set(fvalue + "\t" + num);
+			outputValue.set(String.valueOf(size) + "\t" + fvalue + "\t" + num);
 
 			context.write(fieldGroupSizeKey, outputValue);
 
@@ -53,7 +53,11 @@ public class FieldGroupSort {
 			Text value = null;
 			while (iter.hasNext() && i < 10) {
 				value = iter.next();
-				outputKey.set(key.getFieldGroup() + "\t" + key.getSize());
+				//String [] parts = value.toString().split("\t", -1);
+				//long size = Long.parseLong(parts[0]);
+				//String fvalue = parts[1];
+				//int num = Integer.parseInt(parts[2]);
+				outputKey.set(key.getFieldGroup() );
 				outputValue.set(value.toString());
 				context.write(outputKey, outputValue);
 				i++;
