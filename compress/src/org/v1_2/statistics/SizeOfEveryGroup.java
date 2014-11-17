@@ -45,7 +45,8 @@ public class SizeOfEveryGroup {
 	public static class ReduceClass extends Reducer<Text, LongWritable, Text, Text>{
 		private long totalCount = 0;
 		private Text outputValue = new Text();
-
+		private static final long totalSize = 2193343;
+		
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values, Context context)
 				throws IOException, InterruptedException {
@@ -54,7 +55,12 @@ public class SizeOfEveryGroup {
 				count += value.get();
 			
 			totalCount += count;
-			outputValue.set(String.valueOf(count));
+			
+			double percent = (double)count * 100 / totalSize;
+			
+			outputValue.set(String.valueOf(count) + "\t" 
+						+ new BigDecimal(percent).setScale(2, BigDecimal.ROUND_HALF_UP) + "%");
+			
 			context.write(key, outputValue);
 		}
 		
