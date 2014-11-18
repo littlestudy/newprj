@@ -1,6 +1,7 @@
 package org.v1_2.datascience.statistics.fieldgroupsort;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 
 import org.apache.hadoop.conf.Configuration;
@@ -30,9 +31,9 @@ public class FieldGroupSort {
 			String fvalue = fields[1];
 			int num = Integer.parseInt(fields[2]);
 
-			long size = fvalue.getBytes().length * num;
+			long size = fvalue.getBytes().length * (num - 1);
 			fieldGroupSizeKey.set(field, size);
-			outputValue.set(String.valueOf(size) + "\t" + fvalue + "\t" + num);
+			outputValue.set(String.valueOf(size) + "\t" + fvalue + "\t" + (num - 1));
 
 			context.write(fieldGroupSizeKey, outputValue);
 
@@ -45,6 +46,8 @@ public class FieldGroupSort {
 		private Text outputValue = new Text();
 		private Text seperator = new Text("---------------------");
 
+		private static final int [] sizes = {120159, 344633, 985323, 109315, 260900, 285887, 17126 };
+		
 		@Override
 		protected void reduce(FieldGroupSizeKey key, Iterable<Text> values,
 				Context context) throws IOException, InterruptedException {
@@ -53,12 +56,19 @@ public class FieldGroupSort {
 			Text value = null;
 			while (iter.hasNext() && i < 10) {
 				value = iter.next();
-				//String [] parts = value.toString().split("\t", -1);
-				//long size = Long.parseLong(parts[0]);
-				//String fvalue = parts[1];
-				//int num = Integer.parseInt(parts[2]);
+				
+				String field = key.getFieldGroup();
+				String [] parts = value.toString().split("\t", -1);
+				long repeatedSize = Long.parseLong(parts[0]);
+				String fvalue = parts[1];
+				int repeatedNum = Integer.parseInt(parts[2]);
+				
+				int num = Integer.parseInt(field) - 1;
+				double	percent = (double) repeatedSize * 100 / sizes[num];	
+				BigDecimal p = new BigDecimal(percent).setScale(2, BigDecimal.ROUND_HALF_UP);
+				
 				outputKey.set(key.getFieldGroup() );
-				outputValue.set(value.toString());
+				outputValue.set(repeatedSize + "\t" + fvalue + "\t" + repeatedNum + "\t" + p + "%");
 				context.write(outputKey, outputValue);
 				i++;
 			}
