@@ -46,7 +46,7 @@ public class Main {
 		job.setJarByClass(Main.class);
 		job.setMapperClass(MappClass.class);
 		job.setReducerClass(ReduceClass.class);
-		MyInputFormat.getTargetFileds(); //
+		//MyInputFormat.getTargetFileds(); //
 		job.setInputFormatClass(MyInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		job.setOutputKeyClass(Text.class);

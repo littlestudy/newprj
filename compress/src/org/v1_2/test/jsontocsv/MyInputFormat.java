@@ -55,7 +55,7 @@ public class MyInputFormat extends JsonToCsvInputForamt{
 		list.add(group6);
 		list.add(group7);
 		
-		JsonToCsvInputForamt.JsonToCsvRecordReader.targetFileds = list;
+		JsonToCsvInputForamt.JsonToCsvRecordReader.groups = list;
 		
 		return list;
 	}

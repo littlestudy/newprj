@@ -1,4 +1,4 @@
-package org.v1_2.datascience.statistics.fieldgroupcount;
+package org.v1_2.patent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +13,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.v1_2.compress.JsonToCsvInputForamt;
+import org.v1_2.patent.IOformat.JsonToCsvInputForamt;
+import org.v1_2.patent.IOformat.NoSeperatorTextOutputFormate;
 
 public class OutputOrigin {
 	public static class MappClass extends Mapper<LongWritable, Text, Text, Text> {
@@ -50,7 +51,7 @@ public class OutputOrigin {
 	
 	public static void main(String[] args) throws Exception {
 				String input = "/home/ym/ytmp/data/statistics/1mRsample";		
-		String output = "/home/ym/ytmp/data/statistics/output/OutputOrigin2";
+		String output = "/home/ym/ytmp/data/statistics/output/OutputOrigin3";
 		runJob(input, output);
 	}
 	
@@ -58,14 +59,14 @@ public class OutputOrigin {
 			InterruptedException, ClassNotFoundException {
 		Configuration conf = new Configuration();
 		Job job = new Job(conf);
-		job.setJarByClass(FieldGroupCount.class);
+		job.setJarByClass(OutputOrigin.class);
 
 		job.setMapperClass(MappClass.class);
 		job.setReducerClass(ReduceClass.class);
 
 		JsonToCsvInputForamt.setGroups(getGroups());
 		job.setInputFormatClass(JsonToCsvInputForamt.class);
-
+		job.setOutputFormatClass(NoSeperatorTextOutputFormate.class);
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);

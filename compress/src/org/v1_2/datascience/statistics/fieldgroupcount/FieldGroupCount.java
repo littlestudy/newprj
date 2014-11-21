@@ -87,7 +87,7 @@ public class FieldGroupCount {
 		job.setMapperClass(MappClass.class);
 		job.setReducerClass(ReduceClass.class);
 
-		JsonToCsvInputForamt.getTargetFileds();
+		//JsonToCsvInputForamt.getTargetFileds();
 		job.setInputFormatClass(JsonToCsvInputForamt.class);
 
 		job.setMapOutputKeyClass(FieldGroupValueKey.class);

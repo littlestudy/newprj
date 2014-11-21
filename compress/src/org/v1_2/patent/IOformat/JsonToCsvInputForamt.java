@@ -1,4 +1,4 @@
-package org.v1_2.compress;
+package org.v1_2.patent.IOformat;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.v1_2.patent.Utils.JsonToCsv;
 
 public class JsonToCsvInputForamt extends FileInputFormat<LongWritable, Text> {
 
