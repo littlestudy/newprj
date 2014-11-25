@@ -35,7 +35,7 @@ public class Compress {
 			}
 
 			if (!line.contains(separator)) { // 对于第一个字段组的情况
-				context.write(new Text(""), new Text("(" + line + ")" + subStr));
+				context.write(new Text("(" + line + ")" + subStr), new Text(""));
 				return;
 			}
 
@@ -55,7 +55,7 @@ public class Compress {
 			for (Text value : values) {
 				sb.append(value.toString());
 			}
-			if (key.toString().equals(""))
+			if (sb.toString().equals(""))
 				context.write(key, new Text(sb.toString()));
 			else
 				context.write(key, new Text("[" + sb.toString() + "]"));
@@ -64,7 +64,7 @@ public class Compress {
 
 	public static void main(String[] args) throws Exception {
 		String input = "file:///home/ym/ytmp/data/test3";
-		String outputbase = "file:///home/ym/ytmp/data/output/newtest--";
+		String outputbase = "file:///home/ym/ytmp/data/output/newtest3";
 		runJob(input, outputbase);
 	}
 

@@ -14,7 +14,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class SplitRecordTreeMapReduce {
+public class SplitRecordTreeMapReduceBygroup {
 
 	public static class MapperClass extends
 			Mapper<LongWritable, Text, Text, Text> {
@@ -70,7 +70,7 @@ public class SplitRecordTreeMapReduce {
 		Configuration conf = new Configuration();
 		Job job = new Job(conf);
 		
-		job.setJarByClass(SplitRecordTreeMapReduce.class);
+		job.setJarByClass(SplitRecordTreeMapReduceBygroup.class);
 		job.setMapperClass(MapperClass.class);
 		
 		job.setInputFormatClass(TextInputFormat.class);
