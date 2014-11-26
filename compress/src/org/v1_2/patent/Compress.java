@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.v1_2.patent.IOformat.JsonToCsvInputForamt;
 import org.v1_2.patent.IOformat.NoSeperatorTextOutputFormate;
 
 public class Compress {
@@ -63,8 +64,8 @@ public class Compress {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String input = "file:///home/ym/ytmp/data/test3";
-		String outputbase = "file:///home/ym/ytmp/data/output/newtest3";
+		String input = "file:///home/ym/ytmp/data/statistics/1mRsample";
+		String outputbase = "file:///home/ym/ytmp/data/output/1mRsample-new/r";
 		runJob(input, outputbase);
 	}
 
@@ -72,16 +73,28 @@ public class Compress {
 		Configuration conf = new Configuration();
 		Job job = null;
 
+		input = firstProcess(input, outputbase);
+		
 		String output = outputbase;
-		for (int i = 0; i < getGroups2().size(); i++) {
+		for (int i = 0; i < getGroups().size() - 1; i++) {
 
 			job = new Job(conf);
-			initJob(job);
+			initJob2(job);
+			output = outputbase + i;
 			setJobPath(job, input, output);
 			job.waitForCompletion(true);
 			input = output;
-			output = outputbase + i;
 		}
+	}
+
+	private static String firstProcess(String input, final String output) throws Exception {
+		Configuration conf = new Configuration();
+		Job job = new Job(conf);
+		initJob1(job);
+		setJobPath(job, input, output + "p");
+		job.waitForCompletion(true);
+		
+		return output + "p";
 	}
 
 	public static void setJobPath(Job job, String input, String output)
@@ -90,7 +103,19 @@ public class Compress {
 		FileOutputFormat.setOutputPath(job, new Path(output));
 	}
 
-	public static void initJob(Job job) throws Exception {
+	public static void initJob1(Job job) throws Exception {
+
+		job.setJarByClass(Compress.class);
+		job.setMapperClass(MapperClass.class);
+		job.setReducerClass(ReducerClass.class);
+		JsonToCsvInputForamt.setGroups(getGroups());		
+		job.setInputFormatClass(JsonToCsvInputForamt.class);
+		job.setOutputFormatClass(NoSeperatorTextOutputFormate.class);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(Text.class);
+	}
+	
+	public static void initJob2(Job job) throws Exception {
 
 		job.setJarByClass(Compress.class);
 		job.setMapperClass(MapperClass.class);

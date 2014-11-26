@@ -61,8 +61,8 @@ public class SplitRecordTreeMapReduceBygroup {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String input = "file:///home/ym/ytmp/data/output/newtestoo";
-		String outputbase = "file:///home/ym/ytmp/data/output/newtestoo-";
+		String input = "file:///home/ym/ytmp/data/statistics/1mRsample-H-C";
+		String outputbase = "file:///home/ym/ytmp/data/output/1mRsample-H-C";
 		runJob(input, outputbase);
 	}
 	
