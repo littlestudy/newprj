@@ -77,8 +77,8 @@ public class FieldGroupSort {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String input = "/home/ym/ytmp/data/statistics/output/FieldGroupCount";
-		String output = "/home/ym/ytmp/data/statistics/output/FieldGroupSort";
+		String input = "/home/ym/ytmp/data/output/1mRsample-H-C-group";
+		String output = "/home/ym/ytmp/data/output/FieldGroupSort";
 
 		runJob(input, output);
 	}
