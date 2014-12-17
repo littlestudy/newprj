@@ -69,7 +69,7 @@ public class FieldCount {
 	public static void main(String[] args) throws Exception {
 		//String input = "/home/ym/ytmp/data/statistics/1mRsample-H";
 		String input = "/home/ym/ytmp/data/statistics/test";		
-		String output = "/home/ym/ytmp/data/statistics/output/FieldCount22";
+		String output = "/home/ym/ytmp/data/statistics/output/FieldCount222";
 		
 		runJob(input, output);
 	}

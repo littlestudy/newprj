@@ -68,12 +68,14 @@ public class SplitRecordTreeMapReduceByfield {
 		
 		private static int writeFile(Context context, String group, final int fdp) 
 				throws IOException, InterruptedException{
-				
-			String[] fields = StringUtils.split(group, ",", -1);
+			System.out.println("-- group -- > " + group);
+			//String[] fields = StringUtils.split(group, ",", -1);
+			String[] fields = group.split(",", -1);
 			int i = 0;
 			for (i = 0; i < fields.length; i++){
 				outputKey.set(String.format("%1$02d", fdp + i));
 				outputValue.set(fields[i]);
+				System.out.println(outputKey.toString() + "\t" + outputValue.toString());
 				context.write(outputKey, outputValue);
 			}
 			
@@ -89,8 +91,8 @@ public class SplitRecordTreeMapReduceByfield {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String input = "file:///home/ym/ytmp/data/output/newtest31";
-		String outputbase = "file:///home/ym/ytmp/data/output/newtest32";
+		String input = "file:///home/ym/ytmp/data/statistics/1mRsample-H-C";
+		String outputbase = "file:///home/ym/ytmp/data/output/1mRsample-H-C-field-ss";
 		runJob(input, outputbase);
 	}
 	
@@ -109,7 +111,7 @@ public class SplitRecordTreeMapReduceByfield {
 		
 		FileInputFormat.setInputPaths(job, input);
 		FileOutputFormat.setOutputPath(job, new Path(output));
-		
+		job.setNumReduceTasks(0);
 		job.waitForCompletion(true);		
 	}
 	 
