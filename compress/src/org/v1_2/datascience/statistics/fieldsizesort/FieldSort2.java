@@ -43,10 +43,10 @@ public class FieldSort2 {
 		private Text outputKey = new Text();
 		private Text outputValue = new Text();
 
-		private int[] fieldSize = { 40000, 50159, 10000, 17700, 105694, 79548,
-				53505, 48186, 0, 286208, 97330, 56831, 63741, 0, 66825, 49093,
-				71004, 170134, 24157, 109315, 130000, 120900, 126064, 34445,
-				105378, 17126 };
+		private int[] fieldSize = { 112, 180, 28, 3061, 20734, 15896,
+				10218, 9483, 0, 49984, 21101, 9401, 13356, 0, 14063, 9903,
+				13433, 27342, 3782, 22214, 111709, 105872, 115124, 33377,
+				96406, 17126 };
 
 		private Text seperator = new Text(				
 				"--------------------------------------------------------------------------------------------------"
@@ -104,8 +104,8 @@ public class FieldSort2 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String input = "/home/ym/ytmp/data/statistics/output/FieldCount";
-		String output = "/home/ym/ytmp/data/statistics/output/FieldSort";
+		String input = "/home/ym/ytmp/data/statistics/output/FieldCount333/part-r-00000";
+		String output = "/home/ym/ytmp/data/statistics/output/FieldSort222";
 
 		runJob(input, output);
 	}

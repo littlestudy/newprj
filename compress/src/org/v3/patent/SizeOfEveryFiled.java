@@ -22,11 +22,22 @@ public class SizeOfEveryFiled {
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
+			/*
 			//System.out.println(value.toString());
 			String[] fields = value.toString().split(",", -1);
 			for (int i = 0; i < fields.length; i++){
 				mapOutputKey.set(String.format("%1$02d", i + 1));
 				mapOutputValue.set(fields[i].getBytes().length);
+				context.write(mapOutputKey, mapOutputValue);
+			}
+			*/
+			String[] fields = value.toString().split("\t", -1);
+			String field = fields[0];
+			String fieldvalue = fields[1];
+			int count = Integer.valueOf(fields[2]);
+			for (int i = 0; i < count; i++){
+				mapOutputKey.set(field);
+				mapOutputValue.set(fieldvalue.getBytes().length);
 				context.write(mapOutputKey, mapOutputValue);
 			}
 		}
@@ -37,7 +48,7 @@ public class SizeOfEveryFiled {
 		private double totalPercent = 0.0;
 		
 		private Text outputValue = new Text();
-		private final long clusterSize = 2193343;
+		private final long clusterSize = 889164;
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values, Context context)
 				throws IOException, InterruptedException {
@@ -65,8 +76,8 @@ public class SizeOfEveryFiled {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String input = "/home/ym/ytmp/data/statistics/1mRsample-H";		
-		String output = "/home/ym/ytmp/data/statistics/output/SizeOfEveryFiled";
+		String input = "/home/ym/ytmp/data/statistics/output/FieldCount333/part-r-00000";		
+		String output = "/home/ym/ytmp/data/statistics/output/SizeOfEveryFiled222";
 		
 		runJob(input, output);
 	}
